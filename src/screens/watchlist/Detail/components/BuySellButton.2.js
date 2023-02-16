@@ -27,7 +27,6 @@ import { useShadow } from '~/component/shadow/SvgShadow';
 import { getSymbolClass } from '~/business';
 import { changeBuySell } from '~/screens/new_order/Redux/actions.js';
 import { handleShowNewOrder } from '~/screens/new_order/Controller/SwitchController.js';
-import { setOrderDetail } from '~/screens/new_order/Model/OrderEntryModel';
 
 const TradeButton = ({ isBuy, symbol, exchange, onPress, textColor }) => {
 	const symbolClass = getSymbolClass({ symbol });
@@ -120,8 +119,6 @@ const BuySellButton = ({ symbol, exchange, changeAllowUnmount }) => {
 		dataStorage.isReloading = false // off loading khi back ve screen watch list
 		changeAllowUnmount && changeAllowUnmount(false);
 		dispatch(changeBuySell(isBuy));
-		setOrderDetail({})
-		
 		dataStorage.isNeedSubSymbolOnNewOrder = false;
 		handleShowNewOrder && handleShowNewOrder({
 			symbol,

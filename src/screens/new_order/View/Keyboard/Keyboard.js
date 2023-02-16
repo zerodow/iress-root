@@ -6,7 +6,6 @@ import { changeLoadingCheckVetting } from '~/screens/new_order/Redux/actions.js'
 import TabChangeTradingStrategy from '~/screens/new_order/View/Keyboard/TabChangeTradingStrategy.js';
 import Keyboard from '~/component/virtual_keyboard/Keyboard.js';
 import TabChangeOrderVolume from '~/screens/new_order/View/Keyboard/TabChangeValueOrVol.js';
-import TabChangeContigent from '~/screens/new_order/View/Keyboard/TabChangeContingent';
 import BidAskPrice from '~/screens/new_order/View/Keyboard/BidAskPrice.js';
 import { Navigation } from 'react-native-navigation';
 import SvgIcon from '~/component/svg_icon/SvgIcon.js';
@@ -134,13 +133,13 @@ const KeyboardNewOrder = (props) => {
 					/>
 				);
 				break;
-			case NEW_ORDER_INPUT_KEY.CONTINGENT_STRATEGY:
-				return <TabChangeContigent inputFocus={inputFocus} />;
 			case NEW_ORDER_INPUT_KEY.QUANTITY:
 			case NEW_ORDER_INPUT_KEY.ORDER_VALUE:
 				return <TabChangeOrderVolume inputFocus={inputFocus} />;
+				break;
 			default:
 				return <BidAskPrice />;
+				break;
 		}
 	}, [inputFocus]);
 	return (
@@ -172,8 +171,7 @@ function mapStateToProps(state) {
 		destination: state.newOrder.destination,
 		inputFocus: state.newOrder.inputFocus,
 		newOrder: state.newOrder,
-		forceDisabledButton: state.newOrder.forceDisabledButton,
-		enableContingentBlock: state.newOrder.enableContingentBlock
+		forceDisabledButton: state.newOrder.forceDisabledButton
 	};
 }
 function mapActionToProps(dispatch) {

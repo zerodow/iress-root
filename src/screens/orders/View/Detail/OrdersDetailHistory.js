@@ -4,9 +4,8 @@ import OrdersOriginal from '~s/orders/View/Detail/OrdersOriginal';
 import StoplossStrategy from '~s/orders/View/Detail/StoplossStrategy';
 import TakeProfitStrategy from '~s/orders/View/Detail/TakeProfitStrategy';
 import { useShadow } from '~/component/shadow/SvgShadow';
-import ShadowTop from '~/component/shadow/index.js';
-import CommonStyle from '~/theme/theme_controller';
-import Contingent from './Contingent';
+import ShadowTop from '~/component/shadow/index.js'
+import CommonStyle from '~/theme/theme_controller'
 const OrdersDetailHistory = ({ data, textInsideCircle }) => {
 	const {
 		has_stoploss: isStopLoss,
@@ -25,7 +24,6 @@ const OrdersDetailHistory = ({ data, textInsideCircle }) => {
 					backgroundColor: CommonStyle.backgroundColor
 				}}
 			>
-				<Contingent data={data} />
 				<OrdersOriginal data={data} />
 				<StoplossStrategy
 					data={data}

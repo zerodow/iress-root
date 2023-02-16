@@ -150,30 +150,8 @@ export function getTextInsideCircleProperty({
 	TPOrderStatus,
 	isStoploss,
 	isTakeProfit,
-	orderObject = {},
-	contingentStatus
+	orderObject = {}
 }) {
-	if (contingentStatus === 'ACTIVE') {
-		return {
-			textStyle: {
-				fontFamily: CommonStyle.fontPoppinsRegular,
-				fontSize: CommonStyle.font7,
-				color: CommonStyle.color.warning
-			},
-			text: 'Active'
-		};
-	}
-	if (contingentStatus === 'PRE_ACTIVE') {
-		return {
-			textStyle: {
-				fontFamily: CommonStyle.fontPoppinsRegular,
-				fontSize: CommonStyle.font7,
-				color: CommonStyle.color.warning
-			},
-			text: 'Pre-Active'
-		};
-	}
-
 	if (filledQuantity === 0) {
 		// lenh cha chua fillted thi lenh con chua active, hay trigged nen ko can check
 		return {

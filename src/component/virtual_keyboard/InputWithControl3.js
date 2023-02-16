@@ -154,8 +154,7 @@ export const useListennerChangeText = function ({
 	inputId,
 	decimal,
 	onlyInterger,
-	limitInteger,
-	rest // other function props
+	limitInteger
 }) {
 	return useEffect(() => {
 		Emitter.addListener(
@@ -176,9 +175,6 @@ export const useListennerChangeText = function ({
 						return;
 					}
 					dic.current.text = newText;
-					if (rest && rest.onInput) {
-						rest.onInput(newText);
-					}
 					setText && setText(newText);
 				} else {
 					const currentText = dic.current.text.toString();
@@ -202,9 +198,6 @@ export const useListennerChangeText = function ({
 					}
 					dic.current.text = newText;
 					setText && setText(newText);
-					if (rest && rest.onInput) {
-						rest.onInput(newText);
-					}
 				}
 			}
 		);
@@ -219,7 +212,7 @@ const haveDelete = (text) => {
 	}
 	return true;
 };
-export const useListennerDeleteText = function ({ dic, inputId, setText, rest }) {
+export const useListennerDeleteText = function ({ dic, inputId, setText }) {
 	return useEffect(() => {
 		Emitter.addListener(getChannelDeleteText(inputId), null, () => {
 			if (!haveDelete(dic.current.text)) return;
@@ -227,9 +220,6 @@ export const useListennerDeleteText = function ({ dic, inputId, setText, rest })
 				const newText = dic.current.text.toString().slice(0, -1);
 				dic.current.text = newText;
 				setText(newText);
-				if (rest && rest.onInputByFunctionKey) {
-					rest.onInputByFunctionKey(newText);
-				}
 			} else {
 				const currentText = dic.current.text.toString();
 				const selection = dic.current.selection.end;
@@ -243,9 +233,6 @@ export const useListennerDeleteText = function ({ dic, inputId, setText, rest })
 
 				dic.current.text = newText;
 				setText(newText);
-				if (rest && rest.onInputByFunctionKey) {
-					rest.onInputByFunctionKey(newText);
-				}
 			}
 		});
 		return () => {
@@ -348,7 +335,7 @@ const InputWithControl = React.forwardRef(
 					? null
 					: formatValueWhenFocus(displayText); // Truong hop chi text dang khong nhap gi thi tra ve null
 			refTextInput.current &&
-				refTextInput.current.setNativeProps({ text: displayText || '' });
+				refTextInput.current.setNativeProps({ text: displayText });
 			rest.onBlur && rest.onBlur();
 		});
 
@@ -359,7 +346,7 @@ const InputWithControl = React.forwardRef(
 				dic.current.text = text;
 			}
 			refTextInput.current &&
-				refTextInput.current.setNativeProps({ text: dic.current.text || '' });
+				refTextInput.current.setNativeProps({ text: dic.current.text });
 			isChangeRedux && onChangeText && onChangeText(dic.current.text);
 		});
 		const onReduction = useCallback(() => {
@@ -389,9 +376,6 @@ const InputWithControl = React.forwardRef(
 				dic.current.text = newText;
 			}
 			setText(newText);
-			if (rest && rest.onInputByFunctionKey) {
-				rest.onInputByFunctionKey(newText);
-			}
 		});
 		const onIncrease = useCallback(() => {
 			let newText = isNaN(
@@ -416,9 +400,6 @@ const InputWithControl = React.forwardRef(
 				dic.current.text = newText;
 			}
 			setText(newText);
-			if (rest && rest.onInputByFunctionKey) {
-				rest.onInputByFunctionKey(newText);
-			}
 		});
 		const onSelectionChange = useCallback(
 			({
@@ -436,14 +417,12 @@ const InputWithControl = React.forwardRef(
 			inputId,
 			decimal: dic.current.decimal,
 			onlyInterger,
-			limitInteger,
-			rest
+			limitInteger
 		});
 		useListennerDeleteText({
 			dic,
 			setText,
-			inputId,
-			rest
+			inputId
 		});
 		useImperativeHandle(ref, () => ({
 			updateDic: (update) => {
@@ -543,7 +522,6 @@ const InputWithControl = React.forwardRef(
 							onFocus={onFocus}
 							onChangeText={(text) => {
 								dic.current.text = text;
-								onChangeText && onChangeText(text)
 							}}
 							onChange={({
 								nativeEvent: { eventCount, target, text }

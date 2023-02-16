@@ -172,30 +172,6 @@ export function changeLayout(layout) {
 		payload: layout
 	};
 }
-
-// Show/hide first Contingent strategry which let block of contingent show or not
-export function toggleContingent(enable) {
-	return {
-		type: TYPE.NEW_ORDER_TOGGLE_CONTINGENT,
-		payload: enable
-	};
-}
-
-// Display block of contingent
-export function activeContingent(enable) {
-	return {
-		type: TYPE.NEW_ORDER_TOGGLE_CONTINGENT_BLOCK,
-		payload: enable
-	};
-}
-
-export function setTemplatePriceValue(price) {
-	return {
-		type: TYPE.NEW_ORDER_SET_TEMPLATE_PRICE_POINT_VALUE,
-		payload: price
-	};
-}
-
 export function changeLoadingOrderAttribute(isLoading = true) {
 	return {
 		type: TYPE.NEW_ORDER_CHANGE_LOADING_ORDER_ATTRIBUTE,
@@ -211,42 +187,6 @@ export function changeFocusInput(payload) {
 export function changeTypeInputOrderValueVolume(payload) {
 	return {
 		type: TYPE.NEW_ORDER_CHANGE_TYPE_INPUT_ORDER_VALUE_VOLUME,
-		payload
-	};
-}
-export function changeTypeInputOrderContingent(payload) {
-	return {
-		type: TYPE.NEW_ORDER_CONTIGENT_TYPE,
-		payload
-	};
-}
-export function changeInputText(payload) {
-	return {
-		type: TYPE.NEW_ORDER_CHANGE_INPUT_TEXT,
-		payload
-	};
-}
-export function toggleIgnoreType(payload) {
-	return {
-		type: TYPE.NEW_ORDER_TOGGLE_IGNORE_TYPE,
-		payload
-	};
-}
-export function updateCurrentInputShown(payload) {
-	return {
-		type: TYPE.NEW_ORDER_UPDATE_CURRENT_INPUT_SHOWN,
-		payload
-	};
-}
-export function setTriggerPrice(payload) {
-	return {
-		type: TYPE.NEW_ORDER_SET_TRIGGER_PRICE,
-		payload
-	};
-}
-export function forceCalculateTriggerPrice(payload) {
-	return {
-		type: TYPE.NEW_ORDER_CALCULATE_TRIGGER_PRICE,
 		payload
 	};
 }

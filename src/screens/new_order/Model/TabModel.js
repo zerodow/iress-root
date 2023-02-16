@@ -12,7 +12,6 @@ export const model = {
     rowDepthHeight: Platform.OS === 'android' ? 29.5 : 31.5,
     priceInfoHeight: 0,
     isDisableTabBuySell: false,
-    isDisableTab : false, 
     changeMaxHeight: () => { }
 }
 export function setTabTrading(tabs) {
@@ -55,7 +54,6 @@ export function reset() {
     }
     model.maxHeight = 334
     model.isDisableTabBuySell = false
-    model.isDisableTab = false
 }
 export function setHeightDepthRow(h) {
     model.rowDepthHeight = h

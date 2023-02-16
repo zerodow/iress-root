@@ -54,8 +54,8 @@ const STATE = {
 };
 
 const POSITION_DISTANCE = {
-	TOP: HEIGHT_ROW - 16 - 14,
-	MIDDLE: HEIGHT_ROW - 16,
+	TOP: HEIGHT_ROW - 19 - 19,
+	MIDDLE: HEIGHT_ROW - 19,
 	BOTTOM: HEIGHT_ROW
 };
 
@@ -66,7 +66,7 @@ const SIDE = {
 };
 
 const FirstPart = React.memo(
-	({ side, _heightValue, _top }) => {
+	({ side, _heightValue }) => {
 		const property = useMemo(() => {
 			return side === SIDE.BUY
 				? {
@@ -83,7 +83,7 @@ const FirstPart = React.memo(
 				style={{
 					position: 'absolute',
 					justifyContent: 'center',
-					top: _top,
+					top: 0,
 					left: 0,
 					right: 64 / 2,
 					height: _heightValue,
@@ -135,7 +135,6 @@ const SecondPart = ({
 	if (SLOrderStatus === 'Triggered Inactive' && SLRemainingVolume === 0) {
 		color = CommonStyle.color.modify;
 	}
-	// 11 + 1 + 1+ 1 = 14
 	return (
 		<View
 			style={{
@@ -143,11 +142,12 @@ const SecondPart = ({
 				top: 0,
 				left: 0,
 				right: 64 / 2,
-				bottom: 16,
+				bottom: 72 - 53,
 				borderColor: CommonStyle.color.dusk_tabbar,
 				borderRadius: 8,
 				borderWidth: 1,
 				alignItems: 'flex-end',
+				paddingBottom: 4,
 				flexDirection: 'row'
 			}}
 		>
@@ -157,8 +157,7 @@ const SecondPart = ({
 					fontSize: CommonStyle.font7,
 					fontFamily: CommonStyle.fontPoppinsRegular,
 					marginLeft: 8,
-					marginRight: 8,
-					lineHeight: 11
+					marginRight: 8
 				}}
 			>
 				{I18n.t('stopLossLowerCase')}
@@ -222,7 +221,6 @@ const ThirdPart = ({
 		color = CommonStyle.color.modify;
 	}
 	const marginRight = isStoploss && isTakeProfit ? 8 : 16;
-	// 11 + 1 + 2 = 16
 	return (
 		<View
 			style={{
@@ -235,8 +233,8 @@ const ThirdPart = ({
 				borderRadius: 8,
 				borderWidth: 1,
 				alignItems: 'flex-end',
-				flexDirection: 'row',
-				paddingBottom: 2
+				paddingBottom: 4,
+				flexDirection: 'row'
 			}}
 		>
 			<Text
@@ -245,8 +243,7 @@ const ThirdPart = ({
 					fontSize: CommonStyle.font7,
 					fontFamily: CommonStyle.fontPoppinsRegular,
 					marginLeft: 8,
-					marginRight: marginRight,
-					lineHeight: 11
+					marginRight: marginRight
 				}}
 			>
 				{I18n.t(keyLanguage)}
@@ -256,50 +253,9 @@ const ThirdPart = ({
 	);
 };
 
-const ContingentPart = ({ status }) => {
-	let color = CommonStyle.fontNearLight6;
-	let borderColor = CommonStyle.color.dusk_tabbar;
-	if (status === 'ACTIVE' || status === 'PRE_ACTIVE') {
-		color = CommonStyle.color.warning;
-		borderColor = CommonStyle.color.warning;
-	}
-	// contingentStatus
-	// 12 + 1 + 2 + 2 = 17
-	return (
-		<View
-			style={{
-				position: 'absolute',
-				top: 0,
-				left: 0,
-				right: 64 / 2,
-				bottom: 14 + 16,
-				borderColor,
-				borderRadius: 8,
-				borderWidth: 1,
-				paddingTop: 2,
-				flexDirection: 'row'
-			}}
-		>
-			<Text
-				style={{
-					color,
-					fontSize: CommonStyle.fontTiny,
-					fontFamily: CommonStyle.fontPoppinsRegular,
-					marginLeft: 8,
-					marginRight: 8,
-					lineHeight: 12
-				}}
-			>
-				{I18n.t('condition')}
-			</Text>
-		</View>
-	);
-};
-
-let AnimationComp = ({ value, _top }, ref) => {
-	const updateHeight = useCallback(({ position, top }) => {
+let AnimationComp = ({ value }, ref) => {
+	const updateHeight = useCallback(({ position }) => {
 		value && value.setValue(position);
-		_top && _top.setValue(top);
 	}, []);
 	useImperativeHandle(ref, () => {
 		return {
@@ -338,8 +294,7 @@ let TextInsideCircle = (props, ref) => {
 			TPOrderStatus,
 			isStoploss,
 			isTakeProfit,
-			orderObject,
-			contingentStatus
+			orderObject
 		}) => {
 			// const { textStyle, text } = getFillStatusProperty({
 			//     filledQuantity,
@@ -352,8 +307,7 @@ let TextInsideCircle = (props, ref) => {
 				TPOrderStatus,
 				isStoploss,
 				isTakeProfit,
-				orderObject,
-				contingentStatus
+				orderObject
 			});
 			setTextProperty({
 				textStyle,
@@ -397,16 +351,8 @@ const Left = ({ item }) => {
 		filled_quantity: filledQuantity,
 		order_quantity: orderQuantity,
 		stoploss_order_info: SLOrderInfo = {},
-		takeprofit_order_info: TPOrderInfo = {},
-		ct_status: contingentStatus,
-		ct_price_base: contingentPriceBase,
-		ct_condition: condition,
-		ct_trigger_price: contingentPrice
+		takeprofit_order_info: TPOrderInfo = {}
 	} = item;
-
-	const isShowCondition =
-		contingentStatus || contingentPriceBase || condition || contingentPrice;
-
 	const {
 		stoploss_order_status: SLOrderStatus,
 		stoploss_order_action: SLOrderAction,
@@ -422,39 +368,23 @@ const Left = ({ item }) => {
 	const _heightValue = useMemo(() => {
 		return new RNAnimated.Value(HEIGHT_ROW);
 	}, []);
-
-	const _top = useMemo(() => {
-		return new RNAnimated.Value(0);
-	}, []);
-
 	const refAnimation = useRef({});
 	const refPieChart = useRef({});
 	const refTextInsideChart = useRef({});
-
 	useEffect(() => {
 		// Thay đổi stoploss và take profit -> run animation thay đổi height của side
 		let position = POSITION_DISTANCE.BOTTOM; // 2 thằng không trigger
-		let top = 0;
-
 		if ((!isStoploss && isTakeProfit) || (!isTakeProfit && isStoploss)) {
 			position = POSITION_DISTANCE.MIDDLE;
 		} else if (isStoploss && isTakeProfit) {
 			position = POSITION_DISTANCE.TOP;
 		}
-
-		if (isShowCondition) {
-			position = position - 17;
-			top = 17;
-		}
-
 		refAnimation.current &&
 			refAnimation.current.updateHeight &&
-			refAnimation.current.updateHeight({ position, top });
-	}, [isStoploss, isTakeProfit, isShowCondition]);
-
+			refAnimation.current.updateHeight({ position });
+	}, [isStoploss, isTakeProfit]);
 	useEffect(() => {
 		refPieChart.current &&
-			refPieChart.current.changePercent &&
 			refPieChart.current.changePercent(filledQuantityPercent);
 	}, [filledQuantityPercent]);
 	useEffect(() => {
@@ -467,8 +397,7 @@ const Left = ({ item }) => {
 				TPOrderStatus,
 				isStoploss,
 				isTakeProfit,
-				orderObject: item,
-				contingentStatus
+				orderObject: item
 			});
 	}, [
 		filledQuantity,
@@ -476,16 +405,11 @@ const Left = ({ item }) => {
 		SLOrderStatus,
 		TPOrderStatus,
 		isStoploss,
-		isTakeProfit,
-		contingentStatus
+		isTakeProfit
 	]);
 	return (
 		<View style={{ width: '35%', height: '100%' }}>
-			<AnimationComp
-				ref={refAnimation}
-				value={_heightValue}
-				_top={_top}
-			/>
+			<AnimationComp ref={refAnimation} value={_heightValue} />
 			<ThirdPart
 				side={side}
 				isStoploss={isStoploss}
@@ -510,10 +434,8 @@ const Left = ({ item }) => {
 				TPActionStatus={TPActionStatus}
 				SLRemainingVolume={SLRemainingVolume}
 			/>
-			<ContingentPart status={contingentStatus} />
 			<FirstPart
 				_heightValue={_heightValue}
-				_top={_top}
 				side={side}
 				isStoploss={isStoploss}
 				isTakeProfit={isTakeProfit}
@@ -531,7 +453,6 @@ const Left = ({ item }) => {
 						ref={refTextInsideChart}
 						filledQuantity={filledQuantity}
 						orderQuantity={orderQuantity}
-						contingentStatus={contingentStatus}
 					/>
 				}
 			/>

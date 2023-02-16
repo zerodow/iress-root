@@ -2012,7 +2012,6 @@
 	"chart": "Chart",
 	"depth": "Depth",
 	"contingent": "Contingent",
-	"contingent_trigger": "Contingent Trigger",
 	"create1StWL": "Create watchlist",
 	"newsInvalidCodeExchange": "Unable to retrieve News Invalid Code/Exchange",
 	"newsInvalidCode": "Unable to retrieve News Invalid Code",
@@ -2048,7 +2047,5 @@
 	"changeRegion": "Change Region",
 	"areYouSureYouWantToChangeRegion": "Are you sure you want to change region?",
 	"youWillBeLoggedOut": "You will be logged out",
-	"splashSceenAbsa": "Absa Stockbrokers and Portfolio Management (Pty) Limited, Registration Number 1973/010798/07. Member of the JSE™ Equity Market. Authorized Financial Services Provider FSP No. 45849. Registered Credit Provider Reg No NCRCP68.",
-	"limitTriggerPriceValid": "Please enter a valid trigger price",
-	"pointMustBePositive": "Points must be positive"
+	"splashSceenAbsa": "Absa Stockbrokers and Portfolio Management (Pty) Limited, Registration Number 1973/010798/07. Member of the JSE™ Equity Market. Authorized Financial Services Provider FSP No. 45849. Registered Credit Provider Reg No NCRCP68."
 }

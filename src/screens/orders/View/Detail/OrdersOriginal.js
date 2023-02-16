@@ -16,7 +16,7 @@ import { handleShowCancelOrder } from '~/screens/confirm_order/Controllers/Switc
 import { getDisplayLifeTime } from '~/screens/orders/Controller/OrdersController.js';
 const { PRICE_DECIMAL, AMEND_TYPE, FILL_STATUS, CANCEL_TYPE } = ENUM;
 
-export const ButtonAmend = ({ data, navigator }) => {
+const ButtonAmend = ({ data, navigator }) => {
 	const {
 		fill_status: fillStatus,
 		order_action: orderAction,
@@ -72,7 +72,7 @@ export const ButtonAmend = ({ data, navigator }) => {
 	);
 };
 
-export const ButtonCancel = ({ data, navigator }) => {
+const ButtonCancel = ({ data, navigator }) => {
 	const {
 		fill_status: fillStatus,
 		order_action: orderAction,
@@ -133,8 +133,6 @@ export const ButtonCancel = ({ data, navigator }) => {
 
 const Left = ({ fillStatus, data, navigator }) => {
 	const color = getColor({ fillStatus });
-	const { ct_status: status } = data;
-	const isActive = status === 'ACTIVE' || status === 'PRE_ACTIVE';
 
 	return (
 		<View
@@ -153,17 +151,13 @@ const Left = ({ fillStatus, data, navigator }) => {
 			>
 				{fillStatus}
 			</Text>
-			{!isActive && (
-				<>
-					<ButtonAmend navigator={navigator} data={data} />
-					<View
-						style={{
-							height: 8
-						}}
-					/>
-					<ButtonCancel navigator={navigator} data={data} />
-				</>
-			)}
+			<ButtonAmend navigator={navigator} data={data} />
+			<View
+				style={{
+					height: 8
+				}}
+			/>
+			<ButtonCancel navigator={navigator} data={data} />
 		</View>
 	);
 };

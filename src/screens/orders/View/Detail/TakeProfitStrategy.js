@@ -161,15 +161,11 @@ const Left = ({
 	}
 
 	const renderButton = () => {
-		const { ct_status: status } = data;
-		const isActive = status === 'ACTIVE' || status === 'PRE_ACTIVE';
-
 		if (
 			textInsideCircle === 'Stop Loss Triggered' ||
 			textInsideCircle === 'Take Profit Triggered' ||
 			textInsideCircle === 'Deleted' ||
-			textInsideCircle === 'Triggered Inactive' ||
-			isActive
+			textInsideCircle === 'Triggered Inactive'
 		) {
 			return null;
 		}

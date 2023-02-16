@@ -13,65 +13,63 @@ import { getAccActive, getPorfolioTypeByCode, getDicPortfolioType } from '~s/por
 import { getPortfolioTotal } from '~s/portfolio/Controller/PortfolioTotalController'
 import * as Business from '~/business';
 import * as api from '~/api';
-import BlockContingentReviewInfo from './BlockContingentReviewInfo.js';
 const initialState = {
-	fees: {}
+    fees: {}
 }
 const TYPE_ACTION = {
-	SET_FEES: 'SET_FEES'
+    SET_FEES: 'SET_FEES'
 }
 const reducer = (state, action) => {
-	switch (action.type) {
-		case TYPE_ACTION.SET_FEES:
-			return { ...state, fees: action.payload }
-		default:
-			return state;
-	}
+    switch (action.type) {
+        case TYPE_ACTION.SET_FEES:
+            return { ...state, fees: action.payload }
+        default:
+            return state;
+    }
 };
 const Content = (props) => {
-	const [state, dispatch] = useReducer(reducer, initialState);
-	const [availableOrder, setAvailableOrder] = useState('')
+    const [state, dispatch] = useReducer(reducer, initialState);
+    const [availableOrder, setAvailableOrder] = useState('')
 
-	const { newOrder } = props
-	const orderObj = getObjectOrderPlace(newOrder) || {}
-	// const currentAccount = dataStorage.currentAccount
-	const accActive = getAccActive()
-	const typeOder = getPorfolioTypeByCode(accActive)
-	const currentAccount = useMemo(() => getDicPortfolioType(accActive), [])
-	useEffect(() => {
-		getPortfolioTotal(currentAccount.portfolio_id).then(res => {
-			setAvailableOrder(res)
-		})
-	}, [])
+    const { newOrder } = props
+    const orderObj = getObjectOrderPlace(newOrder) || {}
+    // const currentAccount = dataStorage.currentAccount
+    const accActive = getAccActive()
+    const typeOder = getPorfolioTypeByCode(accActive)
+    const currentAccount = useMemo(() => getDicPortfolioType(accActive), [])
+    useEffect(() => {
+        getPortfolioTotal(currentAccount.portfolio_id).then(res => {
+            setAvailableOrder(res)
+        })
+    }, [])
 
-	useEffect(() => {
-		Business.showHideConfirmPlaceButton({ isShow: true })
+    useEffect(() => {
+        Business.showHideConfirmPlaceButton({ isShow: true })
 
-		return () => Business.showHideConfirmPlaceButton({
-			isShow: false
-		})
-	}, [orderObj.code])
+        return () => Business.showHideConfirmPlaceButton({
+            isShow: false
+        })
+    }, [orderObj.code])
 
-	return (
-		<View style={{
-			paddingTop: 8
-		}}>
-			<DisplayAccount exchange={newOrder.exchange} symbol={newOrder.symbol} />
-			<ScrollView disableScrollViewPanResponder={false}>
-				<BlockContingentReviewInfo {...props}/>
-				<BlockInfoSymbol {...props} />
-				<BlockInfoPrice fees={state.fees} {...props} />
-				<View style={{ height: 60 }} />
-			</ScrollView>
+    return (
+        <View style={{
+            paddingTop: 8
+        }}>
+            <DisplayAccount exchange={newOrder.exchange} symbol={newOrder.symbol} />
+            <ScrollView disableScrollViewPanResponder={false}>
+                <BlockInfoSymbol {...props} />
+                <BlockInfoPrice fees={state.fees} {...props} />
+                <View style={{ height: 60 }} />
+            </ScrollView>
 
-		</View>
-	)
+        </View>
+    )
 }
 Content.propTypes = {}
 Content.defaultProps = {}
 function mapStateToProps(state) {
-	return {
-		newOrder: state.newOrder
-	}
+    return {
+        newOrder: state.newOrder
+    }
 }
 export default connect(mapStateToProps)(Content)

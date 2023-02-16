@@ -49,24 +49,17 @@ export function initData({
 	order_type: orderType = [],
 	destination,
 	child_order_type: childOrderType,
-	child_duration: childDuration,
-	fixed_price_base : fixedPriceBase
+	child_duration: childDuration
 }) {
 	orderType && setMapOrderType(orderType);
 	childOrderType && setMapChildOrderType(childOrderType);
 	duration && setMapOrderDuration(duration);
 	childDuration && setMapChildOrderDuration(childDuration);
 	destination && setMapOrderDestination(destination);
-	fixedPriceBase && setMapOrderFixedPrice(fixedPriceBase);
 }
 export function getDestinations() {
 	return model.destination;
 }
-
-export function getFixedPriceBase() {
-	return model.fixedPriceBase;
-}
-
 export function setMapChildOrderType(childOrderType) {
 	model.childOrderType = reverseMapKey(childOrderType, OrderTypeString);
 }
@@ -76,11 +69,6 @@ export function setMapChildOrderDuration(childDuration) {
 export function setMapOrderDestination(listKeyDestination = []) {
 	model.destination = reverseMapKey(listKeyDestination, DestinationString);
 }
-
-export function setMapOrderFixedPrice(fixedPriceBase = []) {
-	model.fixedPriceBase = fixedPriceBase
-}
-
 export function getOrderType(isChild = false) {
 	return isChild
 		? model.childOrderType || new Map()
@@ -108,7 +96,6 @@ export function detroy() {
 		orderType: new Map(), // {MARKET:{title:'Market Order',value:MARKET}}
 		duration: new Map(), // {EOD:{title:'End Of Day',value:'EOD}},
 		destination: new Map(), // {EOD:{title:'End Of Day',value:'EOD}},
-		fixedPriceBase : new Map(),
 		exchange: null,
 		symbol: null
 	};

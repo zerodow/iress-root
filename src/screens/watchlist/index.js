@@ -35,7 +35,6 @@ import Error from '~/component/error_system/Error.js';
 import HandleReLoadApp from './HandleReLoadApp';
 import { useDispatch } from 'react-redux';
 import { useUpdateChangeTheme } from '~/component/hook';
-// import ContingentBlock2 from '../new_order/Components/ContingentBlock2';
 
 const WrapperComponent = ({ children }) => {
 	if (Platform.OS === 'ios') {
@@ -119,10 +118,8 @@ const SignIn = ({ loginState, onDidmount, navigator }) => {
 				width: '100%',
 				height: '100%',
 				backgroundColor: CommonStyle.backgroundColor1
-				// paddingTop: 100
 			}}
 		>
-			{/* <ContingentBlock2 /> */}
 			<HomePage navigator={navigator} />
 		</View>
 	);

@@ -162,14 +162,6 @@ module.exports = {
 			agilityReport: 'v1',
 			calendar: 'v1'
 		},
-		HL_UAT: {
-			url: 'https://iress-hl-uat-api.equix.app',
-			version: 'v1',
-			cashBalanceVersion: 'v1',
-			entityChangeVersion: 'v1',
-			agilityReport: 'v1',
-			calendar: 'v1'
-		},
 		CIMB_UAT: {
 			url: 'https://iress-hl-uat-api.equix.app',
 			version: 'v1',

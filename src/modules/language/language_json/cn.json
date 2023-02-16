@@ -1940,7 +1940,6 @@
 	"chart": "Chart",
 	"depth": "Depth",
 	"contingent": "Contingent",
-	"contingent_trigger": "Contingent Trigger",
 	"create1StWL": "Create watchlist",
 	"newsInvalidCodeExchange": "Unable to retrieve News Invalid Code/Exchange",
 	"newsInvalidCode": "Unable to retrieve News Invalid Code",

@@ -120,8 +120,7 @@ function mapStateToProps(state) {
         date: state.newOrder.expiryTime,
         newOrder: state.newOrder,
         isLoading: state.confirmPlaceOrder.isLoadingButtonConfirm,
-        isConnected: state.app.isConnected,
-		ctTriggerPrice: state.newOrder.ctTriggerPrice
+        isConnected: state.app.isConnected
     }
 }
 function mapActionToProps(dispatch) {

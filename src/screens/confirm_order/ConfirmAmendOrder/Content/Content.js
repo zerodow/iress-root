@@ -10,7 +10,6 @@ import { connect } from 'react-redux'
 import { getObjectOrderPlaceFees } from '~/screens/new_order/Controller/ContentController.js'
 import { getFees } from '~/screens/confirm_order/Controllers/ContentController.js'
 import { getOrderDetail } from '~/screens/new_order/Model/OrderEntryModel.js'
-
 const useGetFees = ({ newOrder, setdataFees, dic }) => {
     return useLayoutEffect(() => {
         const objectData = getObjectOrderPlaceFees(newOrder)

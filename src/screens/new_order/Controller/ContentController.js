@@ -38,10 +38,6 @@ import {
 import { getPortfolioType } from '~/screens/portfolio/Controller/PortfolioAccountController.js';
 import OrderType from '~/constants/order_type.js';
 import { isNumber } from 'lodash';
-import * as ConditionModel from '~/screens/new_order/Model/PriceBaseContingentConditionModel';
-import * as PriceBaseTabModel from '~/screens/new_order/Model/PriceBaseContingentTabModel';
-import { ALERT } from '../Components/ContingentBlock';
-
 const {
 	EXCHANGE_CODE_MAPPING,
 	NOTE_STATE,
@@ -240,14 +236,8 @@ export function getObjectAmendOrder({ data, newOrder }) {
 			takeProfitLoss,
 			orderType,
 			expiryTime,
-			isBuy,
-			ctTriggerPrice,
-			enableContingentBlock,
-			isContingentTypePoint,
-			templateTriggerPrice,
+			isBuy
 		} = newOrder;
-		const _triggerPrice = ctTriggerPrice.value;
-
 		quantity = quantity.value;
 		stopPrice = stopPrice.value;
 		takeProfitLoss = takeProfitLoss.value;
@@ -300,17 +290,6 @@ export function getObjectAmendOrder({ data, newOrder }) {
 		//         // objectOrder['trigger_take_profit_price'] = takeProfitLoss
 		//     }
 		// }
-
-		if (enableContingentBlock) {
-			if (isContingentTypePoint) {
-				// Use template calcualated price before instead of price trigger when user are using point
-				objectOrder['ct_trigger_price'] = parseFloat(templateTriggerPrice);
-			} else {
-				objectOrder['ct_trigger_price'] = parseFloat(_triggerPrice);
-			}
-			objectOrder['ct_condition'] = ConditionModel.model.depth;
-			objectOrder['ct_price_base'] = PriceBaseTabModel.model.depth;
-		}
 
 		return objectOrder;
 	} catch (error) {
@@ -369,16 +348,16 @@ export function getObjSL({
 		!isAmend
 	) {
 		if (isAmend) {
-			objectOrder['stoploss_order_price'] = +stopPrice;
-			objectOrder['stoploss_price'] = +stopPrice;
+			objectOrder['stoploss_order_price'] = stopPrice;
+			objectOrder['stoploss_price'] = stopPrice;
 		} else {
-			objectOrder['stop_price'] = +stopPrice;
-			objectOrder['trigger_stop_price'] = +stopPrice;
+			objectOrder['stop_price'] = stopPrice;
+			objectOrder['trigger_stop_price'] = stopPrice;
 		}
 		if (isAmend) {
 			objectOrder['stoploss_order_id'] =
 				stopLossOrderInfo.stoploss_order_id;
-			// objectOrder['stoploss_is016'] = stopLossOrderInfo.stoploss_is016;
+			objectOrder['stoploss_is016'] = stopLossOrderInfo.stoploss_is016;
 		}
 		objectOrder['stoploss_order_type'] = orderType.key;
 	}
@@ -387,9 +366,9 @@ export function getObjSL({
 		(listTabTrading['MORE_STOPLOSS'] || isAmend)
 	) {
 		if (isAmend) {
-			objectOrder['stoploss_price'] = +stopPrice;
+			objectOrder['stoploss_price'] = stopPrice;
 		} else {
-			objectOrder['trigger_stop_price'] = +stopPrice;
+			objectOrder['trigger_stop_price'] = stopPrice;
 		}
 		switch (orderType.key) {
 			case OrderType.LIMIT:
@@ -407,7 +386,7 @@ export function getObjSL({
 		if (isAmend) {
 			objectOrder['stoploss_order_id'] =
 				stopLossOrderInfo.stoploss_order_id;
-			// objectOrder['stoploss_is016'] = stopLossOrderInfo.stoploss_is016;
+			objectOrder['stoploss_is016'] = stopLossOrderInfo.stoploss_is016;
 		}
 		objectOrder = handleGetExpiryTimeSL({
 			objectOrder,
@@ -433,17 +412,17 @@ export function getObjTP({
 		!isAmend
 	) {
 		if (isAmend) {
-			objectOrder['takeprofit_order_price'] = +takeProfitLoss;
-			objectOrder['takeprofit_price'] = +takeProfitLoss;
+			objectOrder['takeprofit_order_price'] = takeProfitLoss;
+			objectOrder['takeprofit_price'] = takeProfitLoss;
 		} else {
-			objectOrder['take_profit_price'] = +takeProfitLoss;
-			objectOrder['trigger_take_profit_price'] = +takeProfitLoss;
+			objectOrder['take_profit_price'] = takeProfitLoss;
+			objectOrder['trigger_take_profit_price'] = takeProfitLoss;
 		}
 		if (isAmend) {
 			objectOrder['takeprofit_order_id'] =
 				takeProfitOrderInfo.takeprofit_order_id;
-			// objectOrder['takeprofit_is016'] =
-			// 	takeProfitOrderInfo.takeprofit_is016;
+			objectOrder['takeprofit_is016'] =
+				takeProfitOrderInfo.takeprofit_is016;
 		}
 		objectOrder['takeprofit_order_type'] = orderType.key;
 	}
@@ -452,9 +431,9 @@ export function getObjTP({
 		(listTabTrading['MORE_TAKE_PROFIT'] || isAmend)
 	) {
 		if (isAmend) {
-			objectOrder['takeprofit_price'] = +takeProfitLoss;
+			objectOrder['takeprofit_price'] = takeProfitLoss;
 		} else {
-			objectOrder['trigger_take_profit_price'] = +takeProfitLoss;
+			objectOrder['trigger_take_profit_price'] = takeProfitLoss;
 		}
 		switch (orderType.key) {
 			case OrderType.LIMIT:
@@ -472,8 +451,8 @@ export function getObjTP({
 		if (isAmend) {
 			objectOrder['takeprofit_order_id'] =
 				takeProfitOrderInfo.takeprofit_order_id;
-			// objectOrder['takeprofit_is016'] =
-			// 	takeProfitOrderInfo.takeprofit_is016;
+			objectOrder['takeprofit_is016'] =
+				takeProfitOrderInfo.takeprofit_is016;
 		}
 		objectOrder = handleGetExpiryTimeTP({
 			objectOrder,
@@ -502,14 +481,9 @@ export function getObjectOrderPlace(newOrder, confirmBreachAction = false) {
 			takeProfitLoss,
 			takeProfitLoss: takeProfitInfo,
 			orderValue,
-			expiryTime,
-			ctTriggerPrice,
-			enableContingentBlock,
-			isContingentTypePoint,
-			templateTriggerPrice
+			expiryTime
 		} = newOrder;
 		quantity = parseInt(quantity.value);
-		const _triggerPrice = ctTriggerPrice.value;
 		orderValue = parseInt(orderValue.value);
 		limitPrice = parseFloat(limitPrice);
 		stopPrice = parseFloat(stopPrice.value);
@@ -525,18 +499,6 @@ export function getObjectOrderPlace(newOrder, confirmBreachAction = false) {
 				break;
 			default:
 				break;
-		}
-		if (enableContingentBlock) {
-			if (isContingentTypePoint) {
-				// Use template calcualated price before instead of price trigger when user are using point
-				objectOrder['ct_trigger_price'] = parseFloat(templateTriggerPrice);
-				ALERT('use template price:' + parseFloat(templateTriggerPrice));
-			} else {
-				objectOrder['ct_trigger_price'] = parseFloat(_triggerPrice);
-				ALERT('use trigger price:' + _triggerPrice);
-			}
-			objectOrder['ct_condition'] = ConditionModel.model.depth;
-			objectOrder['ct_price_base'] = PriceBaseTabModel.model.depth;
 		}
 		objectOrder['duration'] = duration.key;
 		objectOrder['volume'] = quantity;
@@ -772,24 +734,6 @@ export function validatePreOrder(newOrder, stateNewOrder) {
 		orderValue = parseFloat(orderValue);
 		stopPrice = parseFloat(stopPrice);
 		profitLoss = parseFloat(profitLoss);
-		const ctTriggerPrice = parseFloat(stateNewOrder.ctTriggerPrice.value);
-		if (stateNewOrder.enableContingentBlock &&
-			stateNewOrder.currentInputShown === 0 &&
-			!stateNewOrder.isContingentTypePoint) {
-			return {
-				msg: I18n.t('limitTriggerPriceValid'),
-				key: TYPE_ERROR_ORDER.TRIGGER_PRICE_INVALID_ERROR
-			};
-		}
-
-		if (stateNewOrder.enableContingentBlock &&
-			stateNewOrder.currentInputShown === 0 &&
-			stateNewOrder.isContingentTypePoint) {
-			return {
-				msg: I18n.t('pointMustBePositive'),
-				key: TYPE_ERROR_ORDER.POINTS_INVALID_ERROR
-			};
-		}
 		if (!symbol) {
 			return {
 				msg: I18n.t('symbolSelectFirst'),
@@ -896,8 +840,7 @@ export function getOrderAttributes({ symbol, exchange, cb }) {
 				destination: data.destination,
 				child_order_type: data.child_order_type,
 				child_duration: data.child_duration,
-				child_destination: data.child_destination,
-				fixed_price_base: data.fixed_price_base
+				child_destination: data.child_destination
 			});
 			Controller.dispatch(changeLoadingOrderAttribute(false));
 		});

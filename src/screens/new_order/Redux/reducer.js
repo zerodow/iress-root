@@ -27,8 +27,6 @@ import {
 	getQuantityByOrderValue
 } from '~/screens/new_order/Controller/InputController.js';
 import OrderTypeEnum from '~/constants/order_type';
-import { resetContingentCondition } from '../Model/PriceBaseContingentConditionModel';
-import { resetContingentPricebase } from '../Model/PriceBaseContingentTabModel';
 const { STATE_BUY_SELL, PRICE_DECIMAL } = Enum;
 let now = new Date().getTime() + 1000 * 60 * 60 * 24;
 export const INITIAL_STATE = Immutable({
@@ -52,10 +50,6 @@ export const INITIAL_STATE = Immutable({
 	isShowOrderValue: false, // tru show orderValue else show volume
 	quantity: {
 		value: null,
-		isTypeValue: false
-	},
-	ctTriggerPrice: {
-		value: 0,
 		isTypeValue: false
 	},
 	orderValue: {
@@ -88,20 +82,12 @@ export const INITIAL_STATE = Immutable({
 		expiryTime: now,
 		date: now
 	},
-	textChanged: undefined,
 	inputFocus: null,
 	type: 'NEW_ORDER',
 	forceDisabledButton: false,
 	stepQuantity: 1,
 	stepOrderValue: 1,
-	toggleIgnoreType: undefined,
-	expiryTime: now,
-	enableContingent: false, // enable or disable contingent strategy,
-	enableContingentBlock: false, // enable or disable contingent strategy block which let user abble to input,
-	isContingentTypePoint: true, // type Points / Price when keyboard show on input of ContingentBlock,
-	calculateTriggerPrice: undefined, // POINTS/PRICE/undefined,
-	templateTriggerPrice: 0,
-	currentInputShown: 0
+	expiryTime: now
 });
 export default function reducer(state = INITIAL_STATE, action) {
 	switch (action.type) {
@@ -148,10 +134,6 @@ export default function reducer(state = INITIAL_STATE, action) {
 			return state.merge({
 				orderObjectSelected: action.payload
 			});
-		case TYPE.NEW_ORDER_UPDATE_CURRENT_INPUT_SHOWN:
-			return state.merge({
-				currentInputShown: action.payload
-			});
 		case TYPE.NEW_ORDER_CHANGE_SYMBOL_EXCHANGE:
 			return state.merge({
 				symbol: action.payload.symbol,
@@ -182,15 +164,15 @@ export default function reducer(state = INITIAL_STATE, action) {
 					value: state.quantity.isTypeValue
 						? state.orderValue.value
 						: getOrderValueByRule({
-							orderQuantity: state.quantity.value
-						}), // 100 cent = 1 $
+								orderQuantity: state.quantity.value
+						  }), // 100 cent = 1 $
 					isTypeValue: state.quantity.isTypeValue
 				},
 				quantity: {
 					value: state.quantity.isTypeValue
 						? getQuantityByOrderValue({
-							orderValue: state.orderValue.value
-						})
+								orderValue: state.orderValue.value
+						  })
 						: state.quantity.value,
 					isTypeValue: state.quantity.isTypeValue
 				},
@@ -253,18 +235,6 @@ export default function reducer(state = INITIAL_STATE, action) {
 			return state.merge({
 				layout: action.payload
 			});
-		case TYPE.NEW_ORDER_TOGGLE_CONTINGENT:
-			return state.merge({
-				enableContingent: action.payload
-			});
-		case TYPE.NEW_ORDER_TOGGLE_CONTINGENT_BLOCK:
-			return state.merge({
-				enableContingentBlock: action.payload
-			});
-		case TYPE.NEW_ORDER_SET_TEMPLATE_PRICE_POINT_VALUE:
-			return state.merge({
-				templateTriggerPrice: action.payload
-			});
 		case TYPE.NEW_ORDER_CHANGE_LOADING_ORDER_ATTRIBUTE:
 			return state.merge({
 				isLoadingOrderAttribute: action.payload
@@ -283,24 +253,10 @@ export default function reducer(state = INITIAL_STATE, action) {
 				orderValue: {
 					value: action.payload
 						? getOrderValueByRule({
-							orderQuantity: state.quantity.value
-						})
+								orderQuantity: state.quantity.value
+						  })
 						: state.orderValue.value, // 100 cent = 1 $
 					isTypeValue: action.payload
-				}
-			});
-		case TYPE.NEW_ORDER_CONTIGENT_TYPE:
-			return state.merge({
-				isContingentTypePoint: action.payload
-			});
-		case TYPE.NEW_ORDER_CALCULATE_TRIGGER_PRICE:
-			return state.merge({
-				calculateTriggerPrice: action.payload
-			});
-		case TYPE.NEW_ORDER_SET_TRIGGER_PRICE:
-			return state.merge({
-				ctTriggerPrice: {
-					value: action.payload
 				}
 			});
 		case TYPE.NEW_ORDER_CHANGE_ORDER_VALUE:
@@ -325,9 +281,9 @@ export default function reducer(state = INITIAL_STATE, action) {
 						: getPercentForStopPrice(state.stopPrice.value),
 					value: action.payload
 						? getValueForStopPrice(
-							state.stopPrice.percent,
-							getDecimalPriceByRule()
-						)
+								state.stopPrice.percent,
+								getDecimalPriceByRule()
+						  )
 						: state.stopPrice.value,
 					isTypeValue: action.payload // tru is enter $ else enter percent
 				}
@@ -342,9 +298,9 @@ export default function reducer(state = INITIAL_STATE, action) {
 					value: state.stopPrice.isTypeValue
 						? action.payload
 						: getValueForStopPrice(
-							action.payload,
-							getDecimalPriceByRule()
-						),
+								action.payload,
+								getDecimalPriceByRule()
+						  ),
 					isTypeValue: state.stopPrice.isTypeValue // tru is enter $ else enter percent
 				}
 			});
@@ -356,13 +312,13 @@ export default function reducer(state = INITIAL_STATE, action) {
 					percent: action.payload
 						? state.takeProfitLoss.percent
 						: getPercentForTakeProfitLoss(
-							state.takeProfitLoss.value
-						),
+								state.takeProfitLoss.value
+						  ),
 					value: action.payload
 						? getValueForTakeProfitLoss(
-							state.takeProfitLoss.percent,
-							getDecimalPriceByRule()
-						)
+								state.takeProfitLoss.percent,
+								getDecimalPriceByRule()
+						  )
 						: state.takeProfitLoss.value,
 					isTypeValue: action.payload // tru is enter $ else enter percent
 				}
@@ -377,9 +333,9 @@ export default function reducer(state = INITIAL_STATE, action) {
 					value: state.takeProfitLoss.isTypeValue
 						? action.payload
 						: getValueForTakeProfitLoss(
-							action.payload,
-							getDecimalPriceByRule()
-						),
+								action.payload,
+								getDecimalPriceByRule()
+						  ),
 					isTypeValue: state.takeProfitLoss.isTypeValue // tru is enter $ else enter percent
 				}
 			});
@@ -408,14 +364,6 @@ export default function reducer(state = INITIAL_STATE, action) {
 					...state.takeProfitLoss,
 					orderType: action.payload
 				}
-			});
-		case TYPE.NEW_ORDER_CHANGE_INPUT_TEXT:
-			return state.merge({
-				textChanged: action.payload
-			});
-		case TYPE.NEW_ORDER_TOGGLE_IGNORE_TYPE:
-			return state.merge({
-				toggleIgnoreType: action.payload
 			});
 		case TYPE.NEW_ORDER_CHANGE_LIMIT_PRICE_SL:
 			return state.merge({
@@ -467,8 +415,6 @@ export default function reducer(state = INITIAL_STATE, action) {
 }
 function resetStateOrderWhenChangeSideToSell(state, action) {
 	setIsBuy(action.payload.isBuy);
-	resetContingentCondition();
-	resetContingentPricebase();
 	return state.merge({
 		limitPrice: null,
 		triggerPrice: 0,
@@ -484,8 +430,7 @@ function resetStateOrderWhenChangeSideToSell(state, action) {
 		isloadingCheckVetting: false,
 		orderTypeObjectSelected: null,
 		layout: Enum.ORDER_LAYOUT.BASIC,
-		textChanged: undefined,
-		toggleIgnoreType: undefined,
+
 		orderValue: {
 			value: null,
 			isTypeValue: false
@@ -524,24 +469,12 @@ function resetStateOrderWhenChangeSideToSell(state, action) {
 			isTypeValue: false
 		},
 		stepQuantity: 1,
-		stepOrderValue: 1,
-		ctTriggerPrice: {
-			value: 0,
-			isTypeValue: false
-		},
-		currentInputShown: 0,
-		enableContingent: false, // enable or disable contingent strategy,
-		enableContingentBlock: false, // enable or disable contingent strategy block which let user abble to input,
-		isContingentTypePoint: true, // type Points / Price when keyboard show on input of ContingentBlock
-		calculateTriggerPrice: undefined, // POINTS/PRICE/undefined
-		templateTriggerPrice: 0
+		stepOrderValue: 1
 	});
 }
 function resetAllStateOrder(state) {
 	setLimitPrice(0);
 	setIsBuy(true);
-	resetContingentCondition();
-	resetContingentPricebase();
 	return Immutable({
 		limitPrice: null,
 		triggerPrice: 0,
@@ -558,7 +491,6 @@ function resetAllStateOrder(state) {
 		isloadingCheckVetting: false,
 		orderTypeObjectSelected: null,
 		layout: Enum.ORDER_LAYOUT.BASIC,
-		toggleIgnoreType: undefined,
 		isBuy: true,
 		quantity: {
 			value: null,
@@ -594,30 +526,17 @@ function resetAllStateOrder(state) {
 			expiryTime: now,
 			date: now
 		},
-		textChanged: undefined,
 		inputFocus: null,
 		positionAffected: {},
 		forceDisabledButton: false,
 		stepQuantity: 1,
 		stepOrderValue: 1,
-		expiryTime: now,
-		ctTriggerPrice: {
-			value: 0,
-			isTypeValue: false
-		},
-		currentInputShown: 0,
-		enableContingent: false, // enable or disable contingent strategy,
-		enableContingentBlock: false, // enable or disable contingent strategy block which let user abble to input,
-		isContingentTypePoint: true, // type Points / Price when keyboard show on input of ContingentBlock
-		calculateTriggerPrice: undefined, // POINTS/PRICE/undefined
-		templateTriggerPrice: 0
+		expiryTime: now
 	});
 }
 function resetStateNewOrderWhenChangeAccount({ state }) {
 	setLimitPrice(0);
 	setIsBuy(true);
-	resetContingentCondition();
-	resetContingentPricebase();
 	return state.merge({
 		limitPrice: null,
 		triggerPrice: 0,
@@ -625,7 +544,6 @@ function resetStateNewOrderWhenChangeAccount({ state }) {
 		orderObjectSelected: null,
 		duration: {}, // GTD
 		destination: null,
-		textChanged: undefined,
 		// symbol: '',
 		// exchange: '',
 		date: now,
@@ -635,7 +553,6 @@ function resetStateNewOrderWhenChangeAccount({ state }) {
 		isloadingCheckVetting: false,
 		orderTypeObjectSelected: null,
 		layout: Enum.ORDER_LAYOUT.BASIC,
-		toggleIgnoreType: undefined,
 		isBuy: true,
 		quantity: {
 			value: null,
@@ -676,16 +593,6 @@ function resetStateNewOrderWhenChangeAccount({ state }) {
 		forceDisabledButton: false,
 		stepQuantity: 1,
 		stepOrderValue: 1,
-		expiryTime: now,
-		ctTriggerPrice: {
-			value: 0,
-			isTypeValue: false
-		},
-		enableContingent: false, // enable or disable contingent strategy,
-		enableContingentBlock: false, // enable or disable contingent strategy block which let user abble to input,
-		isContingentTypePoint: true, // type Points / Price when keyboard show on input of ContingentBlock
-		calculateTriggerPrice: undefined, // POINTS/PRICE/undefined
-		templateTriggerPrice: 0,
-		currentInputShown: 0
+		expiryTime: now
 	});
 }

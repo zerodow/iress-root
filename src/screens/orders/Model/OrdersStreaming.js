@@ -218,8 +218,8 @@ export function processOrdersRealtime({ data }) {
         orderTag = hardCodeGetOrderTag({ data: item })
         // const isExist = checkExistOrders(originalData, orderId)
         const isExistRealtime = checkExistOrdersRealtime({ key: orderId })
-        // const isChildOrder = checkChildOrders({ hasSL, hasTP, orderId, parentOrderId, rootParentOrderId })
-        // if (isChildOrder) return // Nếu là lệnh con thì không ghi nhận
+        const isChildOrder = checkChildOrders({ hasSL, hasTP, orderId, parentOrderId, rootParentOrderId })
+        if (isChildOrder) return // Nếu là lệnh con thì không ghi nhận
         const isCorrectTab = checkRealtimeCorrectTab(curOrderTag, orderTag)
         // Check Correct filter
         // const isCorrectFilter = checkRealtimeCorrectFilter({ data: item })
@@ -260,8 +260,7 @@ export function pubRealtimeOrder() {
     filterData = filterData.sort((a, b) => b.updated - a.updated)
     Controller.dispatch(setOrders(filterData))
     // Sync data for order detail
-    syncOrdersRealTimeSeq({data : filterData})
-    // syncDataOrderDetail()
+    syncDataOrderDetail()
 }
 
 export function syncDataOrderDetail() {
