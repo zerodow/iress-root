@@ -1,0 +1,1 @@
+cp -r external_library/ReactNativeFingerprintScannerModule.java node_modules/react-native-fingerprint-scanner/android/src/main/java/com/hieuvp/fingerprint/ReactNativeFingerprintScannerModule.java

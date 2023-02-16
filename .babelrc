@@ -1,0 +1,28 @@
+{
+	"presets": [
+		[
+			"module:metro-react-native-babel-preset",
+			{
+				"unstable_disableES6Transforms": true
+			}
+		],
+		"@babel/preset-react"
+	],
+	"plugins": [
+		[
+			"module-resolver",
+			{
+				"root": ["./application"],
+				"alias": {
+					"~": "./src/",
+					"~s": "./src/screens/",
+					"@unis": "./src/screens/universal_search.1",
+					"@lib": "./src/lib/base",
+					"@component": "./src/component",
+					"@module": "./src/modules/"
+				}
+			}
+		],
+		// ["transform-remove-console"]
+	]
+}

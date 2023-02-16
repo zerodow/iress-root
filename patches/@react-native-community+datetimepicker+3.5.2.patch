@@ -1,0 +1,133 @@
+diff --git a/node_modules/@react-native-community/datetimepicker/RNDateTimePicker.podspec b/node_modules/@react-native-community/datetimepicker/RNDateTimePicker.podspec
+index 716b913..bf053eb 100644
+--- a/node_modules/@react-native-community/datetimepicker/RNDateTimePicker.podspec
++++ b/node_modules/@react-native-community/datetimepicker/RNDateTimePicker.podspec
+@@ -15,5 +15,5 @@ Pod::Spec.new do |s|
+   s.source_files = "ios/*.{h,m}"
+   s.requires_arc = true
+ 
+-  s.dependency "React-Core"
++  s.dependency "React/Core"
+ end
+diff --git a/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/Common.java b/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/Common.java
+index 88c2b83..ae176f0 100644
+--- a/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/Common.java
++++ b/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/Common.java
+@@ -1,8 +1,8 @@
+ package com.reactcommunity.rndatetimepicker;
+ 
+-import androidx.fragment.app.DialogFragment;
+-import androidx.fragment.app.FragmentActivity;
+-import androidx.fragment.app.FragmentManager;
++import android.support.v4.app.DialogFragment;
++import android.support.v4.app.FragmentActivity;
++import android.support.v4.app.FragmentManager;
+ 
+ import com.facebook.react.bridge.Promise;
+ 
+diff --git a/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNDatePickerDialogFragment.java b/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNDatePickerDialogFragment.java
+index 3466848..bbd82cb 100644
+--- a/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNDatePickerDialogFragment.java
++++ b/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNDatePickerDialogFragment.java
+@@ -18,9 +18,9 @@ import android.content.DialogInterface.OnClickListener;
+ import android.os.Build;
+ import android.os.Bundle;
+ 
+-import androidx.annotation.NonNull;
+-import androidx.annotation.Nullable;
+-import androidx.fragment.app.DialogFragment;
++import android.support.annotation.NonNull;
++import android.support.annotation.Nullable;
++import android.support.v4.app.DialogFragment;
+ import android.widget.DatePicker;
+ 
+ import java.util.Calendar;
+diff --git a/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNDatePickerDialogModule.java b/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNDatePickerDialogModule.java
+index 493ea2e..1e94b8c 100644
+--- a/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNDatePickerDialogModule.java
++++ b/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNDatePickerDialogModule.java
+@@ -13,10 +13,10 @@ import android.content.DialogInterface.OnDismissListener;
+ import android.content.DialogInterface.OnClickListener;
+ import android.os.Bundle;
+ import android.widget.DatePicker;
+-import androidx.annotation.NonNull;
+-import androidx.annotation.Nullable;
+-import androidx.fragment.app.FragmentActivity;
+-import androidx.fragment.app.FragmentManager;
++import android.support.annotation.NonNull;
++import android.support.annotation.Nullable;
++import android.support.v4.app.FragmentActivity;
++import android.support.v4.app.FragmentManager;
+ 
+ import com.facebook.react.bridge.*;
+ import com.facebook.react.common.annotations.VisibleForTesting;
+diff --git a/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNDismissableDatePickerDialog.java b/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNDismissableDatePickerDialog.java
+index 43f2278..1df8e16 100644
+--- a/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNDismissableDatePickerDialog.java
++++ b/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNDismissableDatePickerDialog.java
+@@ -13,7 +13,7 @@ import android.content.res.TypedArray;
+ import android.os.Build;
+ import android.util.AttributeSet;
+ import android.widget.DatePicker;
+-import androidx.annotation.Nullable;
++import android.support.annotation.Nullable;
+ 
+ import java.lang.reflect.Field;
+ import java.lang.reflect.Method;
+diff --git a/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNDismissableTimePickerDialog.java b/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNDismissableTimePickerDialog.java
+index 073bd8d..15b9681 100644
+--- a/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNDismissableTimePickerDialog.java
++++ b/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNDismissableTimePickerDialog.java
+@@ -19,7 +19,7 @@ import android.os.Build;
+ import android.util.AttributeSet;
+ import android.widget.TimePicker;
+ 
+-import androidx.annotation.Nullable;
++import android.support.annotation.Nullable;
+ 
+ /**
+  * <p>
+diff --git a/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNTimePickerDialogFragment.java b/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNTimePickerDialogFragment.java
+index 0df49a2..21d07d5 100644
+--- a/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNTimePickerDialogFragment.java
++++ b/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNTimePickerDialogFragment.java
+@@ -19,8 +19,8 @@ import android.os.Build;
+ import android.os.Bundle;
+ import android.text.format.DateFormat;
+ 
+-import androidx.annotation.Nullable;
+-import androidx.fragment.app.DialogFragment;
++import android.support.annotation.Nullable;
++import android.support.v4.app.DialogFragment;
+ 
+ import java.util.Locale;
+ 
+diff --git a/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNTimePickerDialogModule.java b/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNTimePickerDialogModule.java
+index 6734fda..01df004 100644
+--- a/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNTimePickerDialogModule.java
++++ b/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/RNTimePickerDialogModule.java
+@@ -19,9 +19,9 @@ import android.content.DialogInterface.OnClickListener;
+ import android.os.Bundle;
+ import android.widget.TimePicker;
+ 
+-import androidx.annotation.Nullable;
+-import androidx.fragment.app.FragmentActivity;
+-import androidx.fragment.app.FragmentManager;
++import android.support.annotation.Nullable;
++import android.support.v4.app.FragmentActivity;
++import android.support.v4.app.FragmentManager;
+ 
+ import static com.reactcommunity.rndatetimepicker.Common.dismissDialog;
+ 
+diff --git a/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/ReflectionHelper.java b/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/ReflectionHelper.java
+index 218bbc1..54a70d5 100644
+--- a/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/ReflectionHelper.java
++++ b/node_modules/@react-native-community/datetimepicker/android/src/main/java/com/reactcommunity/rndatetimepicker/ReflectionHelper.java
+@@ -1,6 +1,6 @@
+ package com.reactcommunity.rndatetimepicker;
+ 
+-import androidx.annotation.Nullable;
++import android.support.annotation.Nullable;
+ 
+ import java.lang.reflect.Field;
+ 

@@ -1,0 +1,5 @@
+<resources>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey"></string>
+    <string name="app_name">Iress Mobile</string>
+    <string name="default_notification_channel_id">Equix_notification</string>
+</resources>

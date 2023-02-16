@@ -1,0 +1,17 @@
+[
+    {
+        "id": 0,
+        "type": "onChangingInformationOrders",
+        "text": "On Changing Info & Orders"
+    },
+    {
+        "id": 1,
+        "type": "afterFiveMins",
+        "text": "After 5 Minutes of Inactivity"
+    },
+    {
+        "id": 2,
+        "type": "afterFifteenMins",
+        "text": "After 15 Minutes of Inactivity"
+    }
+]

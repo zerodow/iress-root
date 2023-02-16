@@ -1,0 +1,96 @@
+platform :ios, '12.2'
+target 'equix' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+  # Pods for 'movieapp'
+
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
+  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
+  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
+  pod 'rn-fetch-blob', :path => '../node_modules/rn-fetch-blob'
+  pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+  pod 'OktaSdkBridgeReactNative', :path => '../node_modules/@okta/okta-react-native'
+  pod 'OktaOidc', '= 3.11.2'
+  
+  pod 'RNKeychain', :path => '../node_modules/react-native-keychain'
+  pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker/RNDateTimePicker.podspec'
+end
+# post_install do
+#   `rm -rf Pods/leveldb-library/port/win`
+# end
+# Required by RNFirebase
+pod 'Firebase/Core', '~> 5.20.2' , :modular_headers => true
+pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
+
+
+# [OPTIONAL PODS] - comment out pods for firebase products you won't be using.
+# pod 'Firebase/AdMob', '~> 5.20.2'
+# pod 'Firebase/Auth', '~> 5.20.2'
+
+pod 'Fabric', '~> 1.10.1'
+pod 'Crashlytics', '~> 3.13.1'
+
+
+pod 'Firebase/Database', '~> 5.20.2'
+# pod 'Firebase/DynamicLinks', '~> 5.20.2'
+pod 'Firebase/Messaging', '~> 5.20.2'
+pod 'Firebase/RemoteConfig', '~> 5.20.2'
+pod 'Firebase/Storage', '~> 5.20.2'
+pod 'Firebase/Performance', '~> 5.20.2'
+
+pod "yoga", :path => "../node_modules/react-native/ReactCommon/yoga"
+
+pod 'React', :path => '../node_modules/react-native', :subspecs => [
+  'ART',
+  'Core',
+  'CxxBridge',
+  'DevSupport', # Include this to enable In-App Devmenu if RN >= 0.43
+  'RCTActionSheet',
+  'RCTAnimation',
+  'RCTGeolocation',
+  'RCTImage',
+  'RCTLinkingIOS',
+  'RCTNetwork',
+  'RCTText',
+  'RCTVibration',
+  'RCTWebSocket', # needed for debugging
+  # Add any other subspecs you want to use in your project
+], :modular_headers => true
+
+pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
+pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
+
+
+post_install do |installer|
+  `rm -rf Pods/leveldb-library/port/win`
+  installer.pods_project.targets.each do |target|
+    if target.name == "React"
+      target.remove_from_project
+    end
+  end
+
+  installer.analysis_result.specifications.each do |s|
+    s.swift_version = '4.2' unless s.swift_version
+  end
+  ## Fix for XCode 12.5
+  find_and_replace("../node_modules/react-native/React/CxxBridge/RCTCxxBridge.mm",
+  "_initializeModules:(NSArray<id<RCTBridgeModule>> *)modules", "_initializeModules:(NSArray<Class> *)modules")
+  find_and_replace("../node_modules/react-native/ReactCommon/turbomodule/core/platform/ios/RCTTurboModuleManager.mm",
+      "RCTBridgeModuleNameForClass(module))", "RCTBridgeModuleNameForClass(Class(module)))")
+end
+
+def find_and_replace(dir, findstr, replacestr)
+  Dir[dir].each do |name|
+      text = File.read(name)
+      replace = text.gsub(findstr,replacestr)
+      if text != replace
+          puts "Fix: " + name
+          File.open(name, "w") { |file| file.puts replace }
+          STDOUT.flush
+      end
+  end
+  Dir[dir + '*/'].each(&method(:find_and_replace))
+end

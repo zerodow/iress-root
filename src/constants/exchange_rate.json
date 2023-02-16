@@ -1,0 +1,14 @@
+[
+    {
+        "symbol": "AUD/USD",
+        "query": "AUDUSD"
+    },
+    {
+        "symbol": "GBP/USD",
+        "query": "GBPUSD"
+    },
+    {
+        "symbol": "EUR/USD",
+        "query": "EURUSD"
+    }
+]

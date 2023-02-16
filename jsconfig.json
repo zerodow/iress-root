@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"allowJs": true,
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["./src/*"],
+			"~s/*": ["./src/screens/*"],
+			"@unis/*": ["./src/screens/universal_search/*"]
+		}
+	},
+	"exclude": ["node_modules"]
+}

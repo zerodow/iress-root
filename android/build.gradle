@@ -1,0 +1,82 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+def REACT_NATIVE_VERSION = new File(['node', '--print',"JSON.parse(require('fs').readFileSync(require.resolve('react-native/package.json'), 'utf-8')).version"].execute(null, rootDir).text.trim())
+
+
+buildscript {
+    ext {
+        // these were added so third party libs do not use androidx dependencies for these, might need others
+        googlePlayServicesVisionVersion = "17.0.2"
+        googlePlayServicesVersion = "16.+"
+        firebaseVersion = "17.3.4"
+        buildToolsVersion = "28.0.3"
+        minSdkVersion = 21
+        compileSdkVersion = 31
+        targetSdkVersion = 31
+    }
+    repositories {
+        google()
+        mavenCentral()
+        mavenLocal()
+        maven {
+            url 'https://maven.fabric.io/public'
+        }
+        maven {
+            url 'https://repo1.maven.org/maven2'
+        }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.4'
+        classpath 'com.google.gms:google-services:4.2.0'
+        classpath 'com.google.firebase:firebase-plugins:1.1.2'
+        classpath 'io.fabric.tools:gradle:1.28.1'
+        classpath 'com.google.firebase:perf-plugin:1.2.1'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        mavenLocal()
+        maven {
+            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+            url "$rootDir/../node_modules/react-native/android"
+        }
+        maven { url "https://jitpack.io" }    // used for MPAndroidChart
+    }
+    configurations.all {
+        resolutionStrategy {
+            force "com.facebook.react:react-native:" + REACT_NATIVE_VERSION
+        }
+    }
+}
+
+subprojects {
+    project.configurations.all {
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'com.android.support'
+                    && !details.requested.name.contains('multidex') ) {
+                details.useVersion "27.1.1"
+            }
+        }
+    }
+    afterEvaluate {
+        android {
+            compileSdkVersion 31
+            buildToolsVersion "31.0.0"
+
+            defaultConfig {
+                targetSdkVersion 31
+            }
+        }
+    }
+}
+
+
+project.ext{
+    kotlin_version = '1.2.41'
+    supportLibVersion = '28.0.3'
+}

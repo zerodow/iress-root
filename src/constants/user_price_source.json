@@ -1,0 +1,18 @@
+[
+    {
+        "id": 0,
+        "text": "noAccess"
+    },
+    {
+        "id": 1,
+        "text": "delayed"
+    },
+    {
+        "id": 2,
+        "text": "c2r"
+    },
+    {
+        "id": 3,
+        "text": "streaming"
+    }
+]

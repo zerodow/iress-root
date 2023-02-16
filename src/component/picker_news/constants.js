@@ -1,0 +1,5 @@
+export const TYPE = {
+    DEFAULT: 'DEFAULT',
+    WITHOUT_PARENT: 'WITHOUT_PARENT',
+    WITH_PARENT: 'WITH_PARENT'
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>945080588479-rpt31cgj8lricvmkolbs1vdev5e88pah.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.945080588479-rpt31cgj8lricvmkolbs1vdev5e88pah</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>945080588479-ctn7a0v1qd7737vqcs71to9ncng2sjs9.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyACmc52YRQ5NGAT8iZfzM4F40fFpScfdiI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>945080588479</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.iress.Trading</string>
+	<key>PROJECT_ID</key>
+	<string>iress-mobile-uat</string>
+	<key>STORAGE_BUCKET</key>
+	<string>iress-mobile-uat.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:945080588479:ios:9c914e432e1c401d604e0a</string>
+</dict>
+</plist>

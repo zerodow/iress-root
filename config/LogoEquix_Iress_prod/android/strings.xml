@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Iress Mobile Trading</string>
+    <string name="default_notification_channel_id">Iress_notification</string>
+</resources>

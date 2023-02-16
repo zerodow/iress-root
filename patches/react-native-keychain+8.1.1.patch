@@ -1,0 +1,242 @@
+diff --git a/node_modules/react-native-keychain/RNKeychain.podspec b/node_modules/react-native-keychain/RNKeychain.podspec
+index 6a2fd09..28ea3f8 100644
+--- a/node_modules/react-native-keychain/RNKeychain.podspec
++++ b/node_modules/react-native-keychain/RNKeychain.podspec
+@@ -15,6 +15,6 @@ Pod::Spec.new do |s|
+   s.source         = { :git => "https://github.com/oblador/react-native-keychain.git", :tag => "v#{s.version}" }
+   s.source_files   = 'RNKeychainManager/**/*.{h,m}'
+   s.preserve_paths = "**/*.js"
+-  s.dependency 'React-Core'
++  s.dependency 'React/Core'
+ 
+ end
+diff --git a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/DeviceAvailability.java b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/DeviceAvailability.java
+index af0b5b0..b988aee 100644
+--- a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/DeviceAvailability.java
++++ b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/DeviceAvailability.java
+@@ -7,7 +7,7 @@ import android.content.Context;
+ import android.content.pm.PackageManager;
+ import android.os.Build;
+ 
+-import androidx.annotation.NonNull;
++import android.support.annotation.NonNull;
+ import androidx.biometric.BiometricManager;
+ 
+ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+diff --git a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/KeychainModule.java b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/KeychainModule.java
+index 9413000..f614371 100644
+--- a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/KeychainModule.java
++++ b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/KeychainModule.java
+@@ -4,9 +4,9 @@ import android.os.Build;
+ import android.text.TextUtils;
+ import android.util.Log;
+ 
+-import androidx.annotation.NonNull;
+-import androidx.annotation.Nullable;
+-import androidx.annotation.StringDef;
++import android.support.annotation.NonNull;
++import android.support.annotation.Nullable;
++import android.support.annotation.StringDef;
+ import androidx.biometric.BiometricManager;
+ import androidx.biometric.BiometricPrompt.PromptInfo;
+ 
+diff --git a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/KeychainPackage.java b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/KeychainPackage.java
+index ba6c5cb..4cec258 100644
+--- a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/KeychainPackage.java
++++ b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/KeychainPackage.java
+@@ -1,6 +1,6 @@
+ package com.oblador.keychain;
+ 
+-import androidx.annotation.NonNull;
++import android.support.annotation.NonNull;
+ 
+ import com.facebook.react.ReactPackage;
+ import com.facebook.react.bridge.JavaScriptModule;
+diff --git a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/PrefsStorage.java b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/PrefsStorage.java
+index b7ecd51..d874186 100644
+--- a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/PrefsStorage.java
++++ b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/PrefsStorage.java
+@@ -4,8 +4,8 @@ import android.content.Context;
+ import android.content.SharedPreferences;
+ import android.util.Base64;
+ 
+-import androidx.annotation.NonNull;
+-import androidx.annotation.Nullable;
++import android.support.annotation.NonNull;
++import android.support.annotation.Nullable;
+ 
+ import com.facebook.react.bridge.ReactApplicationContext;
+ import com.oblador.keychain.KeychainModule.KnownCiphers;
+diff --git a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/SecurityLevel.java b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/SecurityLevel.java
+index 302a323..6ec22d1 100644
+--- a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/SecurityLevel.java
++++ b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/SecurityLevel.java
+@@ -1,6 +1,6 @@
+ package com.oblador.keychain;
+ 
+-import androidx.annotation.NonNull;
++import android.support.annotation.NonNull;
+ 
+ /** Minimal required level of the security implementation. */
+ public enum SecurityLevel {
+diff --git a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/cipherStorage/CipherStorage.java b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/cipherStorage/CipherStorage.java
+index 5d7817f..0c55e9f 100644
+--- a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/cipherStorage/CipherStorage.java
++++ b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/cipherStorage/CipherStorage.java
+@@ -1,7 +1,7 @@
+ package com.oblador.keychain.cipherStorage;
+ 
+-import androidx.annotation.NonNull;
+-import androidx.annotation.Nullable;
++import android.support.annotation.NonNull;
++import android.support.annotation.Nullable;
+ 
+ import com.oblador.keychain.SecurityLevel;
+ import com.oblador.keychain.decryptionHandler.DecryptionResultHandler;
+diff --git a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/cipherStorage/CipherStorageBase.java b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/cipherStorage/CipherStorageBase.java
+index 5c82167..d46b96b 100644
+--- a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/cipherStorage/CipherStorageBase.java
++++ b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/cipherStorage/CipherStorageBase.java
+@@ -6,9 +6,9 @@ import android.security.keystore.KeyInfo;
+ import android.text.TextUtils;
+ import android.util.Log;
+ 
+-import androidx.annotation.NonNull;
+-import androidx.annotation.Nullable;
+-import androidx.annotation.VisibleForTesting;
++import android.support.annotation.NonNull;
++import android.support.annotation.Nullable;
++import android.support.annotation.VisibleForTesting;
+ 
+ import com.oblador.keychain.SecurityLevel;
+ import com.oblador.keychain.exceptions.CryptoFailedException;
+diff --git a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/cipherStorage/CipherStorageFacebookConceal.java b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/cipherStorage/CipherStorageFacebookConceal.java
+index 0dfc55a..be75f25 100644
+--- a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/cipherStorage/CipherStorageFacebookConceal.java
++++ b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/cipherStorage/CipherStorageFacebookConceal.java
+@@ -5,7 +5,7 @@ import android.security.keystore.KeyGenParameterSpec;
+ import android.security.keystore.KeyInfo;
+ import android.util.Log;
+ 
+-import androidx.annotation.NonNull;
++import android.support.annotation.NonNull;
+ 
+ import com.facebook.android.crypto.keychain.AndroidConceal;
+ import com.facebook.android.crypto.keychain.SharedPrefsBackedKeyChain;
+diff --git a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/cipherStorage/CipherStorageKeystoreAesCbc.java b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/cipherStorage/CipherStorageKeystoreAesCbc.java
+index 7dbcc8b..0785098 100644
+--- a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/cipherStorage/CipherStorageKeystoreAesCbc.java
++++ b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/cipherStorage/CipherStorageKeystoreAesCbc.java
+@@ -7,8 +7,8 @@ import android.security.keystore.KeyInfo;
+ import android.security.keystore.KeyProperties;
+ import android.util.Log;
+ 
+-import androidx.annotation.NonNull;
+-import androidx.annotation.Nullable;
++import android.support.annotation.NonNull;
++import android.support.annotation.Nullable;
+ 
+ import com.oblador.keychain.KeychainModule.KnownCiphers;
+ import com.oblador.keychain.SecurityLevel;
+diff --git a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/cipherStorage/CipherStorageKeystoreRsaEcb.java b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/cipherStorage/CipherStorageKeystoreRsaEcb.java
+index b191bdc..6b6f7b7 100644
+--- a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/cipherStorage/CipherStorageKeystoreRsaEcb.java
++++ b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/cipherStorage/CipherStorageKeystoreRsaEcb.java
+@@ -8,8 +8,8 @@ import android.security.keystore.KeyProperties;
+ import android.security.keystore.UserNotAuthenticatedException;
+ import android.util.Log;
+ 
+-import androidx.annotation.NonNull;
+-import androidx.annotation.RequiresApi;
++import android.support.annotation.NonNull;
++import android.support.annotation.RequiresApi;
+ 
+ import com.oblador.keychain.KeychainModule;
+ import com.oblador.keychain.SecurityLevel;
+diff --git a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/decryptionHandler/DecryptionResultHandler.java b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/decryptionHandler/DecryptionResultHandler.java
+index ece0fc8..28b469c 100644
+--- a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/decryptionHandler/DecryptionResultHandler.java
++++ b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/decryptionHandler/DecryptionResultHandler.java
+@@ -1,7 +1,7 @@
+ package com.oblador.keychain.decryptionHandler;
+ 
+-import androidx.annotation.NonNull;
+-import androidx.annotation.Nullable;
++import android.support.annotation.NonNull;
++import android.support.annotation.Nullable;
+ 
+ import com.oblador.keychain.cipherStorage.CipherStorage.DecryptionContext;
+ import com.oblador.keychain.cipherStorage.CipherStorage.DecryptionResult;
+diff --git a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/decryptionHandler/DecryptionResultHandlerInteractiveBiometric.java b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/decryptionHandler/DecryptionResultHandlerInteractiveBiometric.java
+index aaebcbd..cfa494d 100644
+--- a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/decryptionHandler/DecryptionResultHandlerInteractiveBiometric.java
++++ b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/decryptionHandler/DecryptionResultHandlerInteractiveBiometric.java
+@@ -3,10 +3,10 @@ package com.oblador.keychain.decryptionHandler;
+ import android.os.Looper;
+ import android.util.Log;
+ 
+-import androidx.annotation.NonNull;
+-import androidx.annotation.Nullable;
++import android.support.annotation.NonNull;
++import android.support.annotation.Nullable;
+ import androidx.biometric.BiometricPrompt;
+-import androidx.fragment.app.FragmentActivity;
++import android.support.v4.app.FragmentActivity;
+ 
+ import com.facebook.react.bridge.AssertionException;
+ import com.facebook.react.bridge.ReactApplicationContext;
+diff --git a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/decryptionHandler/DecryptionResultHandlerInteractiveBiometricManualRetry.java b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/decryptionHandler/DecryptionResultHandlerInteractiveBiometricManualRetry.java
+index 1f08bec..54ed768 100644
+--- a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/decryptionHandler/DecryptionResultHandlerInteractiveBiometricManualRetry.java
++++ b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/decryptionHandler/DecryptionResultHandlerInteractiveBiometricManualRetry.java
+@@ -3,9 +3,9 @@ package com.oblador.keychain.decryptionHandler;
+ import android.os.Looper;
+ import android.util.Log;
+ 
+-import androidx.annotation.NonNull;
++import android.support.annotation.NonNull;
+ import androidx.biometric.BiometricPrompt;
+-import androidx.fragment.app.FragmentActivity;
++import android.support.v4.app.FragmentActivity;
+ 
+ import com.facebook.react.bridge.ReactApplicationContext;
+ import com.oblador.keychain.cipherStorage.CipherStorage;
+diff --git a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/decryptionHandler/DecryptionResultHandlerNonInteractive.java b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/decryptionHandler/DecryptionResultHandlerNonInteractive.java
+index c9edcb3..a9a9f7f 100644
+--- a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/decryptionHandler/DecryptionResultHandlerNonInteractive.java
++++ b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/decryptionHandler/DecryptionResultHandlerNonInteractive.java
+@@ -1,7 +1,7 @@
+ package com.oblador.keychain.decryptionHandler;
+ 
+-import androidx.annotation.NonNull;
+-import androidx.annotation.Nullable;
++import android.support.annotation.NonNull;
++import android.support.annotation.Nullable;
+ 
+ import com.oblador.keychain.cipherStorage.CipherStorage.DecryptionContext;
+ import com.oblador.keychain.cipherStorage.CipherStorage.DecryptionResult;
+diff --git a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/decryptionHandler/DecryptionResultHandlerProvider.java b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/decryptionHandler/DecryptionResultHandlerProvider.java
+index ee4998e..9b62dd3 100644
+--- a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/decryptionHandler/DecryptionResultHandlerProvider.java
++++ b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/decryptionHandler/DecryptionResultHandlerProvider.java
+@@ -2,7 +2,7 @@ package com.oblador.keychain.decryptionHandler;
+ 
+ import android.os.Build;
+ 
+-import androidx.annotation.NonNull;
++import android.support.annotation.NonNull;
+ import androidx.biometric.BiometricPrompt;
+ 
+ import com.facebook.react.bridge.ReactApplicationContext;
+diff --git a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/exceptions/CryptoFailedException.java b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/exceptions/CryptoFailedException.java
+index cd489e3..3936bb6 100644
+--- a/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/exceptions/CryptoFailedException.java
++++ b/node_modules/react-native-keychain/android/src/main/java/com/oblador/keychain/exceptions/CryptoFailedException.java
+@@ -1,6 +1,6 @@
+ package com.oblador.keychain.exceptions;
+ 
+-import androidx.annotation.Nullable;
++import android.support.annotation.Nullable;
+ 
+ import java.security.GeneralSecurityException;
+ 

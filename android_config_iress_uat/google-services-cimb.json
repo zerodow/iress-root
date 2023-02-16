@@ -1,0 +1,90 @@
+{
+	"project_info": {
+		"project_number": "945080588479",
+		"project_id": "iress-mobile-uat",
+		"storage_bucket": "iress-mobile-uat.appspot.com"
+	},
+	"client": [
+		{
+			"client_info": {
+				"mobilesdk_app_id": "1:945080588479:android:5fad79df0ed1abf0604e0a",
+				"android_client_info": {
+					"package_name": "com.cgscimb.cfd.app"
+				}
+			},
+			"oauth_client": [
+				{
+					"client_id": "945080588479-9ou3ldskoid6590720revvgcps8g1393.apps.googleusercontent.com",
+					"client_type": 3
+				}
+			],
+			"api_key": [
+				{
+					"current_key": "AIzaSyDIfTPwxbNTghaS3sKo9ryq7_spVRCi6e4"
+				}
+			],
+			"services": {
+				"appinvite_service": {
+					"other_platform_oauth_client": [
+						{
+							"client_id": "945080588479-9ou3ldskoid6590720revvgcps8g1393.apps.googleusercontent.com",
+							"client_type": 3
+						},
+						{
+							"client_id": "945080588479-dj5qct59cchdtto56565fpbge5oglh48.apps.googleusercontent.com",
+							"client_type": 2,
+							"ios_info": {
+								"bundle_id": "com.cgscimb.cfd.app"
+							}
+						}
+					]
+				}
+			}
+		},
+		{
+			"client_info": {
+				"mobilesdk_app_id": "1:945080588479:android:b8ecabcd6dcc5fdb604e0a",
+				"android_client_info": {
+					"package_name": "com.iress.Trading"
+				}
+			},
+			"oauth_client": [
+				{
+					"client_id": "945080588479-ctn7a0v1qd7737vqcs71to9ncng2sjs9.apps.googleusercontent.com",
+					"client_type": 1,
+					"android_info": {
+						"package_name": "com.iress.Trading",
+						"certificate_hash": "042205443cf20b6909a543533a49350fd5585eea"
+					}
+				},
+				{
+					"client_id": "945080588479-9ou3ldskoid6590720revvgcps8g1393.apps.googleusercontent.com",
+					"client_type": 3
+				}
+			],
+			"api_key": [
+				{
+					"current_key": "AIzaSyDIfTPwxbNTghaS3sKo9ryq7_spVRCi6e4"
+				}
+			],
+			"services": {
+				"appinvite_service": {
+					"other_platform_oauth_client": [
+						{
+							"client_id": "945080588479-9ou3ldskoid6590720revvgcps8g1393.apps.googleusercontent.com",
+							"client_type": 3
+						},
+						{
+							"client_id": "945080588479-dj5qct59cchdtto56565fpbge5oglh48.apps.googleusercontent.com",
+							"client_type": 2,
+							"ios_info": {
+								"bundle_id": "com.cgscimb.cfd.app"
+							}
+						}
+					]
+				}
+			}
+		}
+	],
+	"configuration_version": "1"
+}

@@ -1,0 +1,7 @@
+export default {
+    TIMEOUT_NOTI_BACKEND: 2 * 60 * 1000,
+    TIME_INTERVAL: 10 * 1000,
+    TIMEOUT: 15 * 1000,
+    ONE_WEEK: 604800000,
+    DISTANCE_DAY: 7
+};

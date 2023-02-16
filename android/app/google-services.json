@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "786087766484",
+    "firebase_url": "https://equix-dev3.firebaseio.com",
+    "project_id": "equix-dev3",
+    "storage_bucket": "equix-dev3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786087766484:android:9d426b084bf3e93e",
+        "android_client_info": {
+          "package_name": "com.quantedge.equixbeta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "786087766484-58hrfedg485uurjsnf3k1kl2pq3oa8io.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAI4QLuUa53NvcGayQrqy1iQ0mtScbCVpw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786087766484:android:5e82069a13abc88e",
+        "android_client_info": {
+          "package_name": "com.quantedge.equixnext"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "786087766484-58hrfedg485uurjsnf3k1kl2pq3oa8io.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAI4QLuUa53NvcGayQrqy1iQ0mtScbCVpw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

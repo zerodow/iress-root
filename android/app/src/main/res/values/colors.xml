@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="splashBackground" type="color">#09172CDF</item>
+    <color name="colorAccent">#10a8b2</color>
+</resources>

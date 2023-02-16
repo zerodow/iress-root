@@ -1,0 +1,74 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+ENV["MY_APP_ID"] = 'com.quantedge.equixv4'
+ENV["MY_PROFILE"] = 'match AppStore com.quantedge.equixv4'
+ENV["WORK_SPACE"] = 'equix.xcworkspace'
+ENV["XCODEPROJ"] = 'equix.xcodeproj'
+ENV["SCHEMA"] = 'equix'
+ENV["TEAM_ID"] = '3WCRW3Y258'
+ENV["CODE_SIGNING"] = 'iPhone Distribution: Quant Edge Joint Stock Company (3WCRW3Y258)'
+# CODE_SIGNING = 'iPhone Developer: Phong Windy (YSVK677HQM)'
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Push a new beta build to TestFlight"
+
+  lane :certificates do
+    match(
+      type: "appstore",
+      git_url: "https://gitlab.com/phong.dang/certificates.git",
+      git_branch: "equixv4",
+      clone_branch_directly: true,
+      force: true,
+      force_for_new_devices: true,
+      app_identifier: ENV["MY_APP_ID"]
+    )
+  end
+
+  lane :beta do
+    disable_automatic_code_signing(path: ENV["XCODEPROJ"])
+    certificates
+    update_provisioning_profile_specifier(
+      xcodeproj: ENV["XCODEPROJ"],
+      new_specifier: ENV["MY_PROFILE"],
+      configuration: 'Release'
+    )
+    update_project_team(
+      path: ENV["XCODEPROJ"],
+      # teamid: ENV["TEAM_ID"]
+    )
+    get_provisioning_profile(
+      force: true,
+      filename: "myFile.mobileprovision"
+    )
+    update_project_provisioning(
+      xcodeproj: ENV["XCODEPROJ"],
+      profile: "./myFile.mobileprovision",
+      build_configuration: "Release",
+      code_signing_identity: ENV["CODE_SIGNING"]
+    )
+    gym(
+      clean: true,
+      workspace: ENV["WORK_SPACE"],
+      scheme: ENV["SCHEMA"],
+      configuration: "Release",
+      export_method: "app-store",
+      xcargs: "-allowProvisioningUpdates"
+      )
+    # enable_automatic_code_signing(path: ENV["XCODEPROJ"])
+    upload_to_testflight()
+  end
+end

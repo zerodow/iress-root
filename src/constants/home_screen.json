@@ -1,0 +1,32 @@
+[
+    {
+        "tabIndex": 3,
+        "id": 0,
+        "screen": "equix.Portfolio",
+        "title": "Portfolio",
+        "activeTab": 0,
+        "screenName": "Holdings"
+    },
+    {
+        "tabIndex": 3,
+        "id": 1,
+        "screen": "equix.Portfolio",
+        "title": "Portfolio",
+        "activeTab": -1,
+        "screenName": "Portfolio Performance"
+    },
+    {
+        "tabIndex": 0,
+        "id": 2,
+        "screen": "equix.NewOverview",
+        "title": "Market Overview",
+        "screenName": "Market Overview"
+    },
+    {
+        "tabIndex": 1,
+        "id": 3,
+        "screen": "equix.Trade",
+        "title": "Watchlist",
+        "screenName": "Watchlist"
+    }
+]

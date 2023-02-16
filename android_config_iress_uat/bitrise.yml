@@ -1,0 +1,164 @@
+---
+format_version: 1.1.0
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+trigger_map:
+- push_branch: master
+  workflow: qa
+workflows:
+  _init_install:
+    steps:
+    - activate-ssh-key:
+        title: Activate App SSH key
+        inputs:
+        - ssh_key_save_path: "$HOME/.ssh/steplib_ssh_step_id_rsa"
+    - git-clone: {}
+    - script@1.1.3:
+        title: Set Full Build
+        inputs:
+        - content: |-
+            #!/bin/bash
+            # BITRISEIO_PlAYSTORETOKEN_URL
+            # if [[ "$GIT_CLONE_COMMIT_MESSAGE_SUBJECT" == *"[FULL BUILD]"* ]]
+            # then
+            envman add --key RUN_GRADLEW --value 1
+            # else
+            #   envman add --key RUN_GRADLEW --value 0
+            # fi
+  _code_push:
+    steps:
+    - script@1.1.3:
+        title: Install CodePush CLI
+        inputs:
+        - content: |-
+            #!/bin/bash
+            #npm install -g code-push-cli
+    - script@1.1.3:
+        title: CodePush auth
+        inputs:
+        - content: |-
+            #!/bin/bash
+            #code-push login --accessKey 3fb15aea34d9e7e7c6cee99ee9fe2afa48ab331b
+    - script@1.1.3:
+        title: CodePush deploy
+        inputs:
+        - content: |-
+            #!/bin/bash
+           #code-push release-react $YOUR_CODEPUSH_PROJECT android -d $ENVIRONMENT --description "$ENVIRONMENT $GIT_CLONE_COMMIT_MESSAGE_SUBJECT" -m
+    before_run: 
+    after_run: 
+    envs:
+    - ACCESS_KEY: 'mrvAcrX-Xcdqc1AhkOMtQ9j7D_yu05d73241-3c54-4861-86b2-b372bea5f09e'
+  _make_apk:
+    steps:
+    - script@1.1.3:
+        title: gradlew
+        run_if: '{{enveq "RUN_GRADLEW" "1"}}'
+        inputs:
+        - content: |-
+            #!/bin/bash
+            export ENVFILE=$ENVFILE && cd android && ./gradlew assembleRelease
+            ls  -a $FULL_DIRECTORY
+    - sign-apk@1.2.0:
+        run_if: '{{enveq "RUN_GRADLEW" "1"}}'
+        inputs:
+        - apk_path: "$FULL_PATH_RELEASE"
+        is_always_run: true
+    - script@1.1.3:
+        title: cp apk
+        run_if: '{{enveq "RUN_GRADLEW" "1"}}'
+        inputs:
+        - content: |-
+            #!/bin/bash
+            cp $BITRISE_SIGNED_APK_PATH $BITRISE_DEPLOY_DIR/signed-app-release.apk
+    - google-play-deploy@1.2.3:
+        is_always_run: false
+        run_if: '{{enveq "RUN_GRADLEW" "1"}}'
+        inputs:
+        - track: beta
+        - package_name: com.quantedge.equixnext
+        - apk_path: "$BITRISE_SIGNED_APK_PATH"
+        - service_account_json_key_path: "$BITRISEIO_PlAYSTORETOKEN_URL"
+    # - deploy-to-bitrise-io@1.3.3:
+    #     is_always_run: false
+    #     run_if: '{{enveq "RUN_GRADLEW" "1"}}'
+    #     inputs:
+    #     - notify_email_list: ''
+    before_run: 
+    after_run: 
+  production:
+    steps:
+    - script@1.1.3:
+        title: Set Environment
+        inputs:
+        - content: |-
+            #!/bin/bash
+            envman add --key ENVIRONMENT --value "Production"
+    - file-downloader@0.9.1:
+        inputs:
+        - source: "$BITRISEIO_production_env_URL"
+        - destination: "$BITRISE_SOURCE_DIR/environment"
+    - script@1.1.3:
+        title: set ENVFILE
+        inputs:
+        - content: envman add --key ENVFILE --value environment
+    before_run:
+    - _init_install
+    after_run:
+    - _make_apk
+    - _slack_message
+  _slack_message:
+    steps:
+    - slack@2.3.0:
+        inputs:
+        - webhook_url: 
+        - channel: "#engineering-alerts"
+        - from_username: Bitrise CI - iOS $ENVIRONMENT CodePush Deploy Succeeded
+        - from_username_on_error: Bitrise CI - iOS $ENVIRONMENT CodePush Deploy Failed
+        - message: 'Test the changes on the latest $ENVIRONMENT build. Click here
+            to download the build: https://www.pillowhomes.com/apps'
+        - message_on_error: 'Click here to find out why the build failed: $BITRISE_BUILD_URL'
+        - emoji: ":confetti_ball:"
+        - emoji_on_error: ":shrug:"
+    before_run: 
+    after_run: 
+  staging:
+    steps:
+    - script@1.1.3:
+        title: Set Environment
+        inputs:
+        - content: |2-
+
+            envman add --key ENVIRONMENT --value "Staging"
+            envman add --key ENVFILE --value .env.staging
+    before_run:
+    - _init_install
+    after_run:
+    - _make_apk
+    - _slack_message
+  qa:
+    steps:
+    - script@1.1.3:
+        title: Set Environment
+        inputs:
+        - content: |-
+            envman add --key ENVIRONMENT --value "QA"
+            envman add --key ENVFILE --value .env.qa
+            envman add --key BITRISEIO_PlAYSTORETOKEN_URL --value "file://./android_config_test/GoogleService.json"
+            envman add --key BITRISEIO_ANDROID_KEYSTORE_URL --value "file://./android_config_test/key.jks"
+            envman add --key BITRISEIO_ANDROID_KEYSTORE_PASSWORD --value "190095"
+            envman add --key BITRISEIO_ANDROID_KEYSTORE_ALIAS --value "equixNext"
+            envman add --key BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD --value "190095"
+            envman add --key ACCESS_KEY --value "mrvAcrX-Xcdqc1AhkOMtQ9j7D_yu05d73241-3c54-4861-86b2-b372bea5f09e"
+
+            currentDir=$PWD
+            fullPath=$currentDir'/android/app/build/outputs/apk/'
+            fullRelease=$currentDir'/android/app/build/outputs/apk/app-release.apk'
+            echo full path build $fullPath
+            echo full path relase $fullRelease
+            envman add --key FULL_DIRECTORY --value $fullPath
+            envman add --key FULL_PATH_RELEASE --value $fullRelease
+
+    before_run:
+    - _init_install
+    after_run:
+    - _make_apk
